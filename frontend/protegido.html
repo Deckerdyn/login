@@ -19,10 +19,11 @@
       }
 
       #calendar {
-        max-width: 900px;
+        width: 100% important;
+        max-width: 1600px; /* Set the maximum width */
         margin: 40px auto;
         background: #292929;
-        padding: 15px;
+        padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       }
@@ -46,11 +47,13 @@
         background-color: #4f8acb;
         color: #fff;
         border: none;
-        padding: 10px 20px;
-        font-size: 16px;
+        padding: 10px 20px; /* Adjust padding to control button size */
+        font-size: 18px; /* Adjust font size if needed */
         cursor: pointer;
         border-radius: 5px;
         transition: background 0.3s ease-in-out;
+        width: auto; /* Ensure the button width is based on its content */
+        display: inline-block; /* Make the button inline-block to respect padding */
       }
 
       #backBtn:hover {
@@ -119,6 +122,13 @@
         border: 1px solid #555555;
         color: #e0e0e0;
         text-align: justify; /* Alinea el texto de forma justificada */
+      }
+      .protected-container {
+        width: 44%; /* Force the container to take full width */
+        max-width: none; /* Remove any max-width constraints */
+        margin: 0 auto;
+        padding: 20px;
+        box-sizing: border-box;
       }
     </style>
   </head>
