@@ -47,7 +47,7 @@ class CSPMiddleware(BaseHTTPMiddleware):
             "style-src 'self' 'unsafe-inline' https:; "
             "img-src 'self' data: https:; "
             "font-src 'self' data: https:; "
-            "connect-src 'self' https:; "
+            "connect-src 'self' http://10.20.7.231:8001 https:; "  
             "object-src 'none'; "
             "frame-src 'none'; "
             "base-uri 'self';"
