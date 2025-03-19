@@ -90,3 +90,8 @@ button:hover {
   cursor: pointer;
   color: #aaa;
 }
+.centro-container {
+  border-bottom: 1px solid #555555;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}

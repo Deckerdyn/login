@@ -144,7 +144,7 @@
     <div id="modal">
       <div id="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Mediciones del día</h2>
+        <!-- <h2>Mediciones del día</h2> -->
         <ul id="mediciones-list"></ul>
       </div>
     </div>
@@ -229,17 +229,52 @@
         const listContainer = document.getElementById("mediciones-list");
         listContainer.innerHTML = ""; // Limpiar la lista previa
 
-        mediciones.forEach((med, index) => {
-          const li = document.createElement("li");
-          li.textContent = `${index + 1}. ${med.nombre_centro} - ${
-            med.nombre_especie
-          }`;
-          li.onclick = function () {
-            toggleMedicionInline(li, med);
-          };
-          listContainer.appendChild(li);
+        // Agrupar las mediciones por centro (utilizando 'nombre_centro')
+        const medicionesPorCentro = {};
+        mediciones.forEach((med) => {
+          const centro = med.nombre_centro || "Centro desconocido";
+          if (!medicionesPorCentro[centro]) {
+            medicionesPorCentro[centro] = [];
+          }
+          medicionesPorCentro[centro].push(med);
         });
 
+        // Crear un contenedor para cada centro y agregar sus mediciones (ocultas por defecto)
+        Object.keys(medicionesPorCentro).forEach((centro) => {
+          const centroDiv = document.createElement("div");
+          centroDiv.className = "centro-container"; // Puedes definir estilos para separar visualmente cada centro
+
+          // Encabezado clickeable para el centro
+          const centroHeader = document.createElement("h2");
+          centroHeader.textContent = centro;
+          centroHeader.style.cursor = "pointer";
+
+          // Lista de mediciones del centro (oculta por defecto)
+          const ul = document.createElement("ul");
+          ul.style.display = "none";
+
+          // Al hacer clic en el encabezado se alterna la visibilidad de la lista
+          centroHeader.onclick = function () {
+            ul.style.display = ul.style.display === "none" ? "block" : "none";
+          };
+
+          // Para cada medición de este centro, crear un elemento li
+          medicionesPorCentro[centro].forEach((med, index) => {
+            const li = document.createElement("li");
+            li.textContent = `Medición ${index + 1} - ${med.nombre_especie}`;
+            li.onclick = function (e) {
+              e.stopPropagation(); // Evita que el clic en la medición active también el toggle del centro
+              toggleMedicionInline(li, med);
+            };
+            ul.appendChild(li);
+          });
+
+          centroDiv.appendChild(centroHeader);
+          centroDiv.appendChild(ul);
+          listContainer.appendChild(centroDiv);
+        });
+
+        // Mostrar el modal con las mediciones agrupadas por centro
         document.getElementById("modal").style.display = "block";
       }
 
